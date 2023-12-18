@@ -1,0 +1,38 @@
+#Import all relevant libraries
+from PyPDF2 import PdfReader, PdfFileWriter
+import pdfminer
+import numpy as np                        # Numerical Python package
+import tabula                             # PDF table extra package
+import numpy as np
+import pandas as pd
+import os
+import re,string
+import sys
+import re
+
+
+#Function to break the PDF down into multiple pages, and save each page as part of a list
+#----------------------------------------------------------------------------------------------------------------------------
+PATH = (r"C:\Users\chris\OneDrive\Desktop\Statements\Discover-2023-YearToDateSummary.pdf")
+Reader = PdfReader(PATH)
+
+#Length of pages
+Length = (len(Reader.pages))
+
+#Loop to iterate and print out all page data
+n = 0
+SavedText = []
+for n in range(0, len(Reader.pages)):
+    page = Reader.pages[n] #Page selected
+    text = page.extract_text() #Pull text out
+    SavedText.append(text) #Appends most recent text to the list
+    n = n + 1
+
+
+#Function to take all the pages that are saved into the list, break them apart line by line and save each line to a new list
+#----------------------------------------------------------------------------------------------------------------------------
+Cost = []
+
+Cost.append(re.search("$[0-9999]", SavedText[0]))
+
+print(Cost)
